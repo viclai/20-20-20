@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>20-20-20 Timer</title>
+    <link rel="stylesheet"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <h1 class="text-center">
+      <span class="glyphicon glyphicon-eye-open"></span>
+      20-20
+      <span class="glyphicon glyphicon-eye-open"></span>
+    </h1> 
+    <p class="text-center" id="instr">
+      Click on Start to start the timer.
+    </p>
+    <h2 id="time" class="text-center text-warning">Time Remaining: 00:00:00</h2>
+    <div class="text-center">
+      <button class="btn btn-primary" id="start_timer">Start</button>
+      <button class="btn btn-danger disabled" id="reset_timer">Reset</button>
+      <button class="btn btn-default" id="hideBtn">Hide</button>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    require('./renderer.js');
+
+    const {ipcRenderer} = require('electron');
+    const notifier = require('node-notifier');
+    const path = require('path');
+
+    ipcRenderer.on('asynchronous-reply', (event, arg) => {
+      document.getElementById('time').innerHTML = arg.text;
+      if (arg.text == "Time Remaining: 00:00:00") {
+        document.getElementById('start_timer').classList.remove("disabled");
+        document.getElementById('reset_timer').classList.add("disabled");
+        if (!arg.reset) {
+          document.getElementById('instr').innerHTML = "<strong " +
+            "class='text-danger'>Time is up! " +
+            "Focus your eyes on something 20 feet away before coming back!" +
+            "</strong><br />" +
+            "Click on Start to restart the timer.";
+          notifier.notify ({
+            title   : 'Take a break!',
+            icon    : path.join(__dirname, 'images/glasses.png'),
+            message : 'Time is up! Focus your eyes on something 20 feet away before coming back!',
+            sound   : true,
+            wait    : true
+          }, function (err, response) {
+            // Response is response from notification
+          });
+        }
+      }
+    });
+  </script>
+</html>
