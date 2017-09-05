@@ -1,0 +1,26 @@
+{
+  "name": "20-20-20",
+  "productName": "20-20-20",
+  "version": "1.0.0",
+  "description": "A simple desktop timer to keep your eyes from being glued to the computer.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/viclai/20-20",
+  "keywords": [
+    "Electron",
+    "timer"
+  ],
+  "author": "Victor Lai",
+  "devDependencies": {
+    "electron": "~1.6.2",
+    "electron-packager": "^9.0.0"
+  },
+  "dependencies": {
+    "about-window": "^1.7.1",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "node-notifier": "^5.1.2"
+  }
+}
