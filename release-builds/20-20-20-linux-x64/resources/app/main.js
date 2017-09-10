@@ -202,6 +202,7 @@ ipcMain.on('asynchronous-message', (event, arg) => {
   } else if (arg.command == 'Stop Timer') {
     if (timerId) {
       clearInterval(timerId);
+      mainWindow.setProgressBar(0);
       event.sender.send('asynchronous-reply', {
         reset : true,
         text : "Time Remaining: 00:00:00"
